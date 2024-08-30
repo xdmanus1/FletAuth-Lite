@@ -85,6 +85,7 @@ Once the app is running, you can access it via your browser or directly from the
 ### Upcoming Features
 
 - **Advanced Authentication:**
+  - Implement Firebase and oauth.
   - Implement social logins.
   
 - **Settings Overhaul:**
