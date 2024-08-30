@@ -2,7 +2,7 @@
 # Flet App
 
 ![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)
-![Python](https://img.shields.io/badge/python-3.x-blue.svg)
+![Python](https://img.shields.io/badge/python-3.12.2-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 ## 🚀 Introduction
@@ -30,7 +30,7 @@ To get started with the Flet App, follow these simple steps:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/flet-app.git
+   git clone https://github.com/xdmanus1/First-app-in-flet.git
    cd flet-app
    ```
 
@@ -48,11 +48,18 @@ To get started with the Flet App, follow these simple steps:
    ```
 
 4. **Run the app:**
-
+   For default pc run (mac only on mac)
    ```bash
    flet run main.py
    ```
-
+   For Web run
+   ```bash
+   flet run main.py --web
+   ```
+   For Android/IOS run (Ios only on mac)
+   ```bash
+   flet run main.py --android # or --ios
+   ```
 ## 📋 Usage
 
 Once the app is running, you can access it via your browser or directly from the Flet interface. The current version includes the following pages:
@@ -85,8 +92,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📫 Contact
 
-For any questions or suggestions, feel free to reach out at [your.email@example.com](mailto:your.email@example.com).
+For any questions or suggestions, feel free to reach out at [karsahunor@gmail.com](mailto:karsahunor@gmail.com).
 
 ---
 
-Made with ❤️ by [Your Name](https://github.com/yourusername)
+Made with ❤️ by [xdmanus](https://github.com/xdmanus1)
