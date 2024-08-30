@@ -7,7 +7,7 @@
 
 ## 🚀 Introduction
 
-Welcome to **FletAuth Lite**, a sleek and modern Python application built using the Flet framework. The app features user authentication using Firebase Authentication and customizable settings. The project is still a work in progress (WIP), with some features being developed.
+Welcome to **FletAuth Lite**, a sleek and modern Python application built using the [Flet](https://flet.dev/) framework. The app features user authentication using Firebase Authentication and customizable settings. It is designed to work seamlessly on every major operating system (Windows, macOS, Linux) and mobile platforms (iOS, Android). The project is still a work in progress (WIP), with some features currently under development.
 
 ## ✨ Features
 
