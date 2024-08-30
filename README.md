@@ -1,5 +1,5 @@
 
-# Flet App
+# FletAuth Lite
 
 ![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.12.2-blue.svg)
@@ -7,25 +7,21 @@
 
 ## 🚀 Introduction
 
-Welcome to **Flet App**, a sleek and modern Python application built using the Flet framework. The app features user authentication, a data table to manage information, and customizable settings. The project is still a work in progress (WIP), with some features being developed.
+Welcome to **FletAuth Lite**, a sleek and modern Python application built using the Flet framework. The app features user authentication using Firebase Authentication and customizable settings. The project is still a work in progress (WIP), with some features being developed.
 
 ## ✨ Features
 
-- **User Authentication (WIP)**
-  - Login and registration system.
-  - Secure password storage.
+- 🚧 **User Authentication (WIP)**
+  - Login and registration system using Firebase Authentication.
+  - Secure password storage via Firebase.
 
-- **Data Table**
-  - View and manage records with ease.
-  - Dynamic data rendering.
-
-- **Settings (WIP)**
+- 🚧 **Settings (WIP)**
   - Customize your app experience.
   - More options coming soon!
 
 ## 🛠️ Installation
 
-To get started with the Flet App, follow these simple steps:
+To get started with FletAuth Lite, follow these simple steps:
 
 1. **Clone the repository:**
 
@@ -47,26 +43,41 @@ To get started with the Flet App, follow these simple steps:
    pip install -r requirements.txt
    ```
 
-4. **Run the app:**
-   For default pc run (mac only on mac)
-   ```bash
-   flet run main.py
+4. **Configure Firebase:**
+   - Set up a Firebase project in the Firebase Console.
+   - Download the `google-services.json` (for Android) or `GoogleService-Info.plist` (for iOS) from your Firebase project.
+   - Ensure that your Firebase credentials (API keys, etc.) are not hardcoded in your code. Use environment variables or a secure method to manage these credentials.
+
+   **Example using environment variables:**
+
+   ```python
+   import os
+
+   firebase_api_key = os.getenv('FIREBASE_API_KEY')
    ```
-   For Web run
-   ```bash
-   flet run main.py --web
-   ```
-   For Android/IOS run (Ios only on mac)
-   ```bash
-   flet run main.py --android # or --ios
-   ```
+
+   - Store your Firebase credentials in a `.env` file and add `.env` to your `.gitignore` to prevent leaks.
+
+5. **Run the app:**
+   - For desktop (PC/Mac):
+     ```bash
+     flet run main.py
+     ```
+   - For Web:
+     ```bash
+     flet run main.py --web
+     ```
+   - For Android/iOS:
+     ```bash
+     flet run main.py --android  # or --ios
+     ```
+
 ## 📋 Usage
 
 Once the app is running, you can access it via your browser or directly from the Flet interface. The current version includes the following pages:
 
 - **Login Page (WIP):** Securely log in to access your data.
 - **Registration Page (WIP):** Create a new account (work in progress).
-- **Data Table:** View, add, edit, and delete entries.
 - **Settings Page (WIP):** Personalize your app settings (work in progress).
 
 ## 🔄 Roadmap
@@ -76,9 +87,6 @@ Once the app is running, you can access it via your browser or directly from the
 - **Advanced Authentication:**
   - Implement social logins.
   
-- **Enhanced Data Table:**
-  - Sorting, filtering, and exporting options.
-
 - **Settings Overhaul:**
   - More customizable settings.
 
