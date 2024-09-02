@@ -5,7 +5,7 @@ secret_key = "S3CreT!"
 
 
 def main(page: ft.Page):
-    page.title = "Flet Navigation Example"
+    page.title = "FletAuth lite"
     page.adaptive = True
 
     # Initialize references
@@ -36,11 +36,23 @@ def main(page: ft.Page):
         if email == DecryptedEmail and password == DecryptedPass:
             user_logged_in = True
             update_navigation_bar()
-            page.go("/3")
+            page.go("/0")
+            page.update()
         else:
-            page.snack_bar = ft.SnackBar(ft.Text("Invalid credentials"))
+            page.snack_bar = ft.SnackBar(
+                ft.Text("Invalid credentials"),
+                bgcolor=ft.colors.AMBER,
+                shape=ft.RoundedRectangleBorder(radius=15),
+            )
             page.snack_bar.open = True
             page.update()
+
+    def logout(e):
+        nonlocal user_logged_in
+        user_logged_in = False
+        page.update()
+        update_navigation_bar()
+        page.go("/0")
 
     def update_navigation_bar():
         if nav_bar.current is not None:
@@ -54,6 +66,7 @@ def main(page: ft.Page):
                 destinations.append(
                     ft.NavigationDestination(icon=ft.icons.PERSON, label="Profile")
                 )
+                destinations.pop(2)
             nav_bar.current.destinations = destinations
             page.update()
 
@@ -64,7 +77,7 @@ def main(page: ft.Page):
                 "/",
                 [
                     ft.AppBar(
-                        title=ft.Text("Flet Navigation", font_family="Anta"),
+                        title=ft.Text("FletAuth Lite", font_family="Anta"),
                         bgcolor=ft.colors.SURFACE_VARIANT,
                     ),
                     ft.NavigationBar(
@@ -78,11 +91,56 @@ def main(page: ft.Page):
 
         if page.route == "/0" or page.route == "/":
             nav_bar.current.selected_index = 0
-            page.views[-1].controls.insert(1, ft.Text("Home Page"))
+            page.views[-1].controls.insert(
+                1,  # Center
+                ft.Row(
+                    [
+                        ft.Column(
+                            [
+                                ft.Text(
+                                    "Welcome to FletAuth Lite",
+                                    size=50,
+                                    font_family="Anta",
+                                ),
+                            ],
+                            alignment=ft.MainAxisAlignment.CENTER,
+                            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                        )
+                    ],
+                    expand=True,
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                ),
+            )
         elif page.route == "/1":
             nav_bar.current.selected_index = 1
-            page.views[-1].controls.insert(1, ft.Text("Settings Page"))
-        elif page.route == "/2":
+            page.views[-1].controls.insert(
+                1,
+                ft.Row(
+                    [
+                        ft.Column(
+                            [
+                                ft.Text(
+                                    "Work In Progress",
+                                    size=50,
+                                    font_family="Anta",
+                                ),
+                                ft.Icon(
+                                    name=ft.icons.CONSTRUCTION,
+                                    color=ft.colors.RED,
+                                    size=50,
+                                ),
+                            ],
+                            alignment=ft.MainAxisAlignment.CENTER,
+                            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                        )
+                    ],
+                    expand=True,
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                ),
+            )
+        elif page.route == "/2" and user_logged_in == False:
             nav_bar.current.selected_index = 2
             page.views[-1].controls.insert(
                 1,
@@ -118,7 +176,7 @@ def main(page: ft.Page):
                 ),
             )
 
-        elif page.route == "/3":
+        elif page.route == "/2" and user_logged_in == True:
             nav_bar.current.selected_index = 3
             page.views[-1].controls.insert(
                 1,
@@ -127,7 +185,14 @@ def main(page: ft.Page):
                         ft.Column(
                             [
                                 ft.Text("Hello", size=50, font_family="Anta"),
-                                ft.Text(value=decrypt(Testemail, secret_key)),
+                                ft.Text(
+                                    value=f"Email: {decrypt(Testemail, secret_key)}"
+                                ),
+                                ft.ElevatedButton(
+                                    "Exit",
+                                    icon=ft.icons.LOGOUT,
+                                    on_click=logout,
+                                ),
                             ],
                         )
                     ],
