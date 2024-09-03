@@ -1,5 +1,6 @@
 import flet as ft
-from flet.security import encrypt, decrypt
+
+# from flet.security import encrypt, decrypt
 
 secret_key = "S3CreT!"
 
@@ -14,8 +15,8 @@ def main(page: ft.Page):
     password_ref = ft.Ref[ft.TextField]()
 
     # Encrypt credentials for testing
-    Testemail = encrypt("Test", secret_key)
-    Testpass = encrypt("Test", secret_key)
+    Testemail = "Test"  # encrypt("Test", secret_key)
+    Testpass = "Test"  # encrypt("Test", secret_key)
 
     # Fonts
     page.fonts = {
@@ -29,8 +30,8 @@ def main(page: ft.Page):
         # Capture the values entered by the user
         email = email_ref.current.value
         password = password_ref.current.value
-        DecryptedEmail = decrypt(Testemail, secret_key)
-        DecryptedPass = decrypt(Testpass, secret_key)
+        DecryptedEmail = Testemail  # decrypt(Testemail, secret_key)
+        DecryptedPass = Testpass  # decrypt(Testpass, secret_key)
 
         # Check credentials
         if email == DecryptedEmail and password == DecryptedPass:
@@ -185,9 +186,7 @@ def main(page: ft.Page):
                         ft.Column(
                             [
                                 ft.Text("Hello", size=50, font_family="Anta"),
-                                ft.Text(
-                                    value=f"Email: {decrypt(Testemail, secret_key)}"
-                                ),
+                                ft.Text(value=f"Email: {Testemail}"),
                                 ft.ElevatedButton(
                                     "Exit",
                                     icon=ft.icons.LOGOUT,
@@ -216,4 +215,4 @@ def main(page: ft.Page):
     page.go(page.route)
 
 
-ft.app(target=main)
+ft.app(target=main, assets_dir="assets")
