@@ -1,6 +1,7 @@
 import flet as ft
 
-# from flet.security import encrypt, decrypt
+
+from flet.security import encrypt, decrypt
 
 secret_key = "S3CreT!"
 
@@ -8,16 +9,15 @@ secret_key = "S3CreT!"
 def main(page: ft.Page):
     page.title = "FletAuth lite"
     page.adaptive = True
-
     # Initialize references
     nav_bar = ft.Ref[ft.NavigationBar]()
     email_ref = ft.Ref[ft.TextField]()
     password_ref = ft.Ref[ft.TextField]()
 
     # Encrypt credentials for testing
-    Testemail = "Test"  # encrypt("Test", secret_key)
-    Testpass = "Test"  # encrypt("Test", secret_key)
-
+    Testemail = encrypt("Test", secret_key)  # "Test"
+    Testpass = encrypt("Test", secret_key)  # "Test"
+    colorin = ft.colors.SURFACE
     # Fonts
     page.fonts = {
         "Anta": "./assets/fonts/Anta-Regular.ttf",
@@ -25,19 +25,67 @@ def main(page: ft.Page):
     # Track login state
     user_logged_in = False
 
+    text_ref = ft.Ref[ft.Text]()
+    switch_ref = ft.Ref[ft.Switch]()
+    button_ref = ft.Ref[ft.ElevatedButton]()
+
+    def themechange(e):
+        page.theme_mode = (
+            ft.ThemeMode.DARK
+            if page.theme_mode == ft.ThemeMode.LIGHT
+            else ft.ThemeMode.LIGHT
+        )
+        switch_ref.label = (
+            "Light theme" if page.theme_mode == ft.ThemeMode.LIGHT else "Dark theme"
+        )
+        page.update()
+
+    page.theme_mode = ft.ThemeMode.DARK
+
     def handle_submit(e):
         nonlocal user_logged_in
         # Capture the values entered by the user
         email = email_ref.current.value
         password = password_ref.current.value
-        DecryptedEmail = Testemail  # decrypt(Testemail, secret_key)
-        DecryptedPass = Testpass  # decrypt(Testpass, secret_key)
+        DecryptedEmail = decrypt(Testemail, secret_key)  # Testemail
+        DecryptedPass = decrypt(Testpass, secret_key)  # Testpass
 
         # Check credentials
         if email == DecryptedEmail and password == DecryptedPass:
             user_logged_in = True
             update_navigation_bar()
-            page.go("/0")
+            page.update()
+            page.go("/2")
+            nav_bar.current.selected_index = 3
+            page.views[-1].controls.insert(
+                1,
+                ft.Row(
+                    [
+                        ft.Column(
+                            [
+                                ft.Text(
+                                    "Hello",
+                                    size=50,
+                                    font_family="Anta",
+                                    ref=text_ref,
+                                ),
+                                ft.Text(
+                                    value=f"Email: {decrypt(Testemail, secret_key)}",
+                                    ref=text_ref,
+                                ),
+                                ft.ElevatedButton(
+                                    "Exit",
+                                    icon=ft.icons.LOGOUT,
+                                    on_click=logout,
+                                ),
+                            ],
+                        )
+                    ],
+                    expand=True,
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                ),
+            )
             page.update()
         else:
             page.snack_bar = ft.SnackBar(
@@ -59,13 +107,13 @@ def main(page: ft.Page):
         if nav_bar.current is not None:
             # Rebuild the navigation bar with an additional destination if logged in
             destinations = [
-                ft.NavigationDestination(icon=ft.icons.HOME, label="Home"),
-                ft.NavigationDestination(icon=ft.icons.SETTINGS, label="Settings"),
-                ft.NavigationDestination(icon=ft.icons.LOGIN, label="Login"),
+                ft.NavigationBarDestination(icon=ft.icons.HOME, label="Home"),
+                ft.NavigationBarDestination(icon=ft.icons.SETTINGS, label="Settings"),
+                ft.NavigationBarDestination(icon=ft.icons.LOGIN, label="Login"),
             ]
             if user_logged_in:
                 destinations.append(
-                    ft.NavigationDestination(icon=ft.icons.PERSON, label="Profile")
+                    ft.NavigationBarDestination(icon=ft.icons.PERSON, label="Profile")
                 )
                 destinations.pop(2)
             nav_bar.current.destinations = destinations
@@ -87,13 +135,15 @@ def main(page: ft.Page):
                         on_change=lambda e: page.go(f"/{e.control.selected_index}"),
                     ),
                 ],
+                bgcolor=colorin,
             )
         )
 
         if page.route == "/0" or page.route == "/":
             nav_bar.current.selected_index = 0
             page.views[-1].controls.insert(
-                1,  # Center
+                1,
+                # Center
                 ft.Row(
                     [
                         ft.Column(
@@ -102,6 +152,7 @@ def main(page: ft.Page):
                                     "Welcome to FletAuth Lite",
                                     size=50,
                                     font_family="Anta",
+                                    ref=text_ref,
                                 ),
                             ],
                             alignment=ft.MainAxisAlignment.CENTER,
@@ -125,11 +176,17 @@ def main(page: ft.Page):
                                     "Work In Progress",
                                     size=50,
                                     font_family="Anta",
+                                    ref=text_ref,
                                 ),
                                 ft.Icon(
                                     name=ft.icons.CONSTRUCTION,
                                     color=ft.colors.RED,
                                     size=50,
+                                ),
+                                ft.Switch(
+                                    label="Theme",
+                                    on_change=themechange,
+                                    ref=switch_ref,
                                 ),
                             ],
                             alignment=ft.MainAxisAlignment.CENTER,
@@ -150,7 +207,12 @@ def main(page: ft.Page):
                     [
                         ft.Column(
                             [
-                                ft.Text("Login", size=30, font_family="Anta"),
+                                ft.Text(
+                                    "Login",
+                                    size=30,
+                                    font_family="Anta",
+                                    ref=text_ref,
+                                ),
                                 ft.TextField(
                                     ref=email_ref,
                                     label="Email",
@@ -185,8 +247,16 @@ def main(page: ft.Page):
                     [
                         ft.Column(
                             [
-                                ft.Text("Hello", size=50, font_family="Anta"),
-                                ft.Text(value=f"Email: {Testemail}"),
+                                ft.Text(
+                                    "Hello",
+                                    size=50,
+                                    font_family="Anta",
+                                    ref=text_ref,
+                                ),
+                                ft.Text(
+                                    value=f"Email: {decrypt(Testemail, secret_key)}",
+                                    ref=text_ref,
+                                ),
                                 ft.ElevatedButton(
                                     "Exit",
                                     icon=ft.icons.LOGOUT,
