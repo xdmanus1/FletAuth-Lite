@@ -1,7 +1,7 @@
 
 # FletAuth Lite
 
-![Version](https://img.shields.io/badge/version-0.2.6-blue.svg)
+![Version](https://img.shields.io/badge/version-0.2.7-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.12.2-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
