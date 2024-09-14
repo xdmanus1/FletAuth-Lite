@@ -43,22 +43,9 @@ To get started with FletAuth Lite, follow these simple steps:
    pip install -r requirements.txt
    ```
 
-4. **Configure Firebase:**
-   - Set up a Firebase project in the Firebase Console.
-   - Download the `google-services.json` (for Android) or `GoogleService-Info.plist` (for iOS) from your Firebase project.
-   - Ensure that your Firebase credentials (API keys, etc.) are not hardcoded in your code. Use environment variables or a secure method to manage these credentials.
 
-   **Example using environment variables:**
 
-   ```python
-   import os
-
-   firebase_api_key = os.getenv('FIREBASE_API_KEY')
-   ```
-
-   - Store your Firebase credentials in a `.env` file and add `.env` to your `.gitignore` to prevent leaks.
-
-5. **Run the app:**
+4. **Run the app:**
    - For desktop (PC/Mac):
      ```bash
      flet run main.py
